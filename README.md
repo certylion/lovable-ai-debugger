@@ -29,8 +29,6 @@ Lovable AI Debug Helper aims to streamline this process by leveraging the power 
 
 ## Screenshots
 
-*Include screenshots here to showcase the extension in action!*
-
 *   **[Screenshot of the Lovable AI Panel]**
 *   ![lovable-debug-helper1](https://github.com/user-attachments/assets/8c62f20a-c1d4-4fad-a6a8-8d2ac0afc279)
 *   **[Screenshot showing the AI Response after analysis]**
