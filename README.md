@@ -97,35 +97,3 @@ This is an open-source project, and contributions are welcome!
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-*(You should create a file named `LICENSE` in your repository root and paste the MIT License text into it. You can find the text easily online, e.g., at [opensource.org/licenses/MIT](https://opensource.org/licenses/MIT))*
-
-## `.gitignore`
-
-Make sure you have a `.gitignore` file in your project root to avoid committing sensitive information or unnecessary files. A basic one could include:
-
-```gitignore
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Dependency directories
-node_modules/
-
-# Build output
-dist/
-build/
-
-# Environment variables file (if used)
-.env
-
-# IDE / Editor specific files
-.idea/
-.vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
