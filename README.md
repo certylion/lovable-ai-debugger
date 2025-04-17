@@ -32,9 +32,10 @@ Lovable AI Debug Helper aims to streamline this process by leveraging the power 
 *Include screenshots here to showcase the extension in action!*
 
 *   **[Screenshot of the Lovable AI Panel]**
-*   **[Screenshot showing collected Console Logs]**
-*   **[Screenshot showing collected Network Summary]**
+*   ![lovable-debug-helper1](https://github.com/user-attachments/assets/8c62f20a-c1d4-4fad-a6a8-8d2ac0afc279)
 *   **[Screenshot showing the AI Response after analysis]**
+*   ![lovable-debug-helper2](https://github.com/user-attachments/assets/f5b93482-1f69-401e-9ada-a7fdb8f9f275)
+
 
 ## Installation
 
