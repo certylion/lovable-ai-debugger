@@ -1,0 +1,77 @@
+body {
+    font-family: sans-serif;
+    padding: 10px;
+    background-color: #f0f0f0; /* Match DevTools theme slightly */
+    color: #333;
+}
+
+h1, h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-top: 15px;
+}
+
+.section {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+button {
+    padding: 8px 15px;
+    margin-right: 10px;
+    margin-bottom: 10px; /* Add space below buttons */
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #e0e0e0;
+}
+
+button:hover {
+    background-color: #d5d5d5;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+textarea, input[type="password"] {
+    width: 95%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+.response-box {
+    background-color: #e9e9e9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    min-height: 50px;
+    white-space: pre-wrap; /* Preserve formatting */
+    font-family: monospace;
+    margin-top: 5px;
+}
+
+.status {
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+}
+
+small {
+    color: #666;
+    display: block; /* Ensure it takes its own line */
+    margin-top: -5px; /* Adjust spacing */
+}

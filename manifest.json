@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Lovable AI Debug Helper",
+  "version": "1.0",
+  "description": "Collects debug info (Console, Network) and generates an error-solving prompt for AI.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",        // To store potential API keys or settings
+    "activeTab",      // Often needed for eval script execution context
+    "clipboardWrite"  // <<<--- ADDED: Permission to write to the clipboard
+    // "debugger" // Add ONLY if you need reliable console log capture - requires user warning!
+  ],
+  "devtools_page": "devtools.html",
+  "background": {
+    "service_worker": "background.js"
+  }
+  // If you add the debugger permission, you might need host permissions "<all_urls>"
+  // "host_permissions": [ "<all_urls>" ]
+}
