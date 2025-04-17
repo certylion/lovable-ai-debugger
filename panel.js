@@ -360,6 +360,46 @@ function generateLovablePrompt(logs, network) {
     return prompt;
 }
 
+// ===================== WALIDACJA DANYCH WEJŚCIOWYCH =====================
+
+/**
+ * Waliduje tekstowy prompt przed wysłaniem do AI.
+ * @param {string} prompt
+ * @returns {boolean}
+ */
+function validatePrompt(prompt) {
+    if (typeof prompt !== 'string') return false;
+    if (prompt.length < 10 || prompt.length > 4000) return false;
+    // Możesz dodać dodatkowe reguły (np. zakazane znaki)
+    return true;
+}
+
+/**
+ * Waliduje logi konsoli przed użyciem w promptach.
+ * @param {Array} logs
+ * @returns {boolean}
+ */
+function validateLogs(logs) {
+    if (!Array.isArray(logs)) return false;
+    if (logs.length > MAX_CONSOLE_LOG_ENTRIES) return false;
+    for (const log of logs) {
+        if (typeof log.message !== 'string' || log.message.length > 1000) return false;
+    }
+    return true;
+}
+
+/**
+ * Waliduje odpowiedź AI przed wyświetleniem.
+ * @param {string} aiText
+ * @returns {boolean}
+ */
+function validateAiResponse(aiText) {
+    if (typeof aiText !== 'string') return false;
+    if (aiText.length < 1 || aiText.length > 5000) return false;
+    // Możesz dodać dodatkowe reguły (np. zakazane frazy)
+    return true;
+}
+
 /**
  * Handles the click event for the "Generate Lovable Prompt" button.
  */
@@ -371,14 +411,14 @@ async function generatePromptHandler() {
     if (consoleLogsNeedRetrieval) {
         try {
             const logs = await retrieveConsoleLogsFromPage(); // Await the promise
-            if (logs && Array.isArray(logs)) {
+            if (validateLogs(logs)) {
                 collectedConsoleLogs = logs; // Update global state
                 // Update UI display of console logs
                 consoleOutput.value = collectedConsoleLogs.map(log => `[${log.type.toUpperCase()}] ${log.timestamp}: ${log.message}`).join('\n');
             } else {
-                // Handle case where retrieval didn't return a valid array
-                consoleOutput.value += "\n(Could not retrieve valid intercepted logs array).";
-                statusMessage.textContent = "Warning: Could not retrieve intercepted logs.";
+                consoleOutput.value += "\n(Logi nie przeszły walidacji!)";
+                statusMessage.textContent = "Błąd: logi nie przeszły walidacji.";
+                return;
             }
         } catch (error) {
             // Error during retrieval is already logged by retrieveConsoleLogsFromPage
@@ -396,6 +436,11 @@ async function generatePromptHandler() {
 
     // Generate the actual prompt text using the (potentially updated) data
     const promptText = generateLovablePrompt(collectedConsoleLogs, collectedNetworkSummary);
+    if (!validatePrompt(promptText)) {
+        generatedPrompt.value = "Błąd: prompt nie przeszedł walidacji.";
+        statusMessage.textContent = "Błąd: prompt nie przeszedł walidacji.";
+        return;
+    }
     generatedPrompt.value = promptText; // Display the generated prompt
     statusMessage.textContent = "Prompt generated and ready to send.";
     checkAiButtonState(); // Enable the "Send to AI" button if conditions are met
@@ -444,10 +489,10 @@ async function sendToAiHandler() {
         return;
     }
     const currentPrompt = generatedPrompt.value;
-    if (!currentPrompt || currentPrompt === "Generating...") {
-         statusMessage.textContent = "Error: Generate a prompt first.";
-         aiResponseDiv.textContent = "Generate a prompt before sending.";
-         return;
+    if (!validatePrompt(currentPrompt)) {
+        statusMessage.textContent = "Błąd: prompt nie przeszedł walidacji.";
+        aiResponseDiv.textContent = "Błąd: prompt nie przeszedł walidacji.";
+        return;
     }
 
     // Update UI for loading state
@@ -509,10 +554,8 @@ async function sendToAiHandler() {
         const data = await response.json();
 
         // --- Extract the AI's generated text from the response ---
-        // The exact path can vary slightly depending on the API version and model response structure.
-        // Check the Gemini API documentation for the expected format.
         const candidate = data?.candidates?.[0]; // Get the first candidate
-        let aiText = candidate?.content?.parts?.[0]?.text; // Extract text part
+        let aiText = candidate?.content?.parts?.[0]?.text;
 
         // Handle cases where the response might be blocked or empty
         if (!aiText) {
@@ -528,6 +571,13 @@ async function sendToAiHandler() {
                 aiText = "❓ AI returned an empty response or the structure was unexpected.";
                 console.warn("Unexpected AI response structure:", data); // Log for debugging
              }
+        }
+
+        // Walidacja odpowiedzi AI
+        if (!validateAiResponse(aiText)) {
+            aiResponseDiv.textContent = "Błąd: odpowiedź AI nie przeszła walidacji.";
+            statusMessage.textContent = "Błąd: odpowiedź AI nie przeszła walidacji.";
+            return;
         }
 
         // Display the AI's analysis

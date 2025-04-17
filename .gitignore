@@ -22,3 +22,9 @@ build/
 *.njsproj
 *.sln
 *.sw?
+
+# Ignoruj folder Cursor (reguły, pamięć, zadania itp.)
+.cursor/
+
+# Raport bezpieczeństwa (lokalny, nie do repozytorium)
+REPORT.md
